@@ -1,1 +1,2 @@
-
+Part1 :Implementation of Fixed and Growable Stack using Interface_STK
+Part2 :  Multiple Interface (Refer assignment List for the problem statement)
