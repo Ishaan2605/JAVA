@@ -1,86 +1,81 @@
-import java.text.DecimalFormat;
-
-abstract class Employee {
-    private String name;
-    private int hoursWorked;
-    private double hourlyRate;
-
-    public Employee(String name, int hoursWorked, double hourlyRate) {
-        this.name = name;
-        this.hoursWorked = hoursWorked;
-        this.hourlyRate = hourlyRate;
-    }
-
-    public abstract double calculateSalary();
-
-    // Getters and setters
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getHoursWorked() {
-        return hoursWorked;
-    }
-
-    public void setHoursWorked(int hoursWorked) {
-        this.hoursWorked = hoursWorked;
-    }
-
-    public double getHourlyRate() {
-        return hourlyRate;
-    }
-
-    public void setHourlyRate(double hourlyRate) {
-        this.hourlyRate = hourlyRate;
-    }
+interface Shapes {
+    double calculateArea();
+    double calculatePerimeter();
 }
 
-class NormalEmployee extends Employee {
-    public NormalEmployee(String name, int hoursWorked, double hourlyRate) {
-        super(name, hoursWorked, hourlyRate);
+class Circle implements Shapes {
+    private double radius;
+
+    public Circle(double radius) {
+        this.radius = radius;
     }
 
     @Override
-    public double calculateSalary() {
-        return getHoursWorked() * getHourlyRate();
-    }
-}
-
-class BonusEmployee extends Employee {
-    private double bonusPercentage;
-
-    public BonusEmployee(String name, int hoursWorked, double hourlyRate, double bonusPercentage) {
-        super(name, hoursWorked, hourlyRate);
-        this.bonusPercentage = bonusPercentage;
-    }
-
-    public double getBonusPercentage() {
-        return bonusPercentage;
-    }
-
-    public void setBonusPercentage(double bonusPercentage) {
-        this.bonusPercentage = bonusPercentage;
+    public double calculateArea() {
+        return Math.PI * radius * radius;
     }
 
     @Override
-    public double calculateSalary() {
-        double baseSalary = getHoursWorked() * getHourlyRate();
-        return baseSalary + (baseSalary * (bonusPercentage / 100));
+    public double calculatePerimeter() {
+        return 2 * Math.PI * radius;
+    }
+}
+
+class Triangle implements Shapes {
+    private double side1;
+    private double side2;
+    private double side3;
+
+    public Triangle(double side1, double side2, double side3) {
+        this.side1 = side1;
+        this.side2 = side2;
+        this.side3 = side3;
+    }
+
+    @Override
+    public double calculateArea() {
+        double s = (side1 + side2 + side3) / 2;
+        return Math.sqrt(s * (s - side1) * (s - side2) * (s - side3));
+    }
+
+    @Override
+    public double calculatePerimeter() {
+        return side1 + side2 + side3;
+    }
+}
+
+class Rectangle implements Shapes {
+    private double length;
+    private double width;
+
+    public Rectangle(double length, double width) {
+        this.length = length;
+        this.width = width;
+    }
+
+    @Override
+    public double calculateArea() {
+        return length * width;
+    }
+
+    @Override
+    public double calculatePerimeter() {
+        return 2 * (length + width);
     }
 }
 
 public class Main {
     public static void main(String[] args) {
-        DecimalFormat df = new DecimalFormat("#.##");
+        Circle circle = new Circle(5);
+        System.out.println("Circle Area: " + circle.calculateArea());
+        System.out.println("Circle Perimeter: " + circle.calculatePerimeter());
 
-        NormalEmployee normalEmployee = new NormalEmployee("John", 40, 15);
-        System.out.println("Normal Employee Salary: ₹" + df.format(normalEmployee.calculateSalary()));
+        Triangle triangle = new Triangle(3, 4, 5);
+        System.out.println("Triangle Area: " + triangle.calculateArea());
+        System.out.println("Triangle Perimeter: " + triangle.calculatePerimeter());
 
-        BonusEmployee bonusEmployee = new BonusEmployee("Alice", 40, 20, 10);
-        System.out.println("Bonus Employee Salary: ₹" + df.format(bonusEmployee.calculateSalary()));
+        Rectangle rectangle = new Rectangle(4, 6);
+        System.out.println("Rectangle Area: " + rectangle.calculateArea());
+        System.out.println("Rectangle Perimeter: " + rectangle.calculatePerimeter());
     }
 }
